@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://csciwvsy10xdt"]
+[gd_scene load_steps=7 format=3 uid="uid://csciwvsy10xdt"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_kubgq"]
 [ext_resource type="Theme" uid="uid://b3nsicbf6e401" path="res://escarg.tres" id="2_aafgr"]
 [ext_resource type="Texture2D" uid="uid://c5chnbjubyl4e" path="res://backg_sprite.png" id="3_tl0d7"]
 [ext_resource type="Texture2D" uid="uid://bc7ohcp7117sr" path="res://snail_sprite.png" id="4_nkq5f"]
+[ext_resource type="Texture2D" uid="uid://2bxonh7g40pu" path="res://resources and assets/key_S1.png" id="5_diegp"]
+[ext_resource type="Texture2D" uid="uid://bbsh88134gffe" path="res://resources and assets/key_S2.png" id="6_v0skn"]
 
 [node name="root" type="Node2D"]
 script = ExtResource("1_kubgq")
@@ -34,6 +36,8 @@ alignment = 1
 [node name="TextureButton" type="TextureButton" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = ExtResource("5_diegp")
+texture_pressed = ExtResource("6_v0skn")
 
 [node name="chrono_timer" type="Label" parent="."]
 offset_left = 514.0

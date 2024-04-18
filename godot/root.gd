@@ -25,10 +25,10 @@ const vitesse_min = 0
 func _ready():
 
 	for i in range(0,8):
-		var key_label = Button.new()
+		var key_label = TextureButton.new()
 		keys.append(key_label)
 		$keyboard_keys.add_child(key_label)
-		key_label.text = key_names_2[i]
+		key_label.texture_normal = load("res://resources and assets/key_S1.png")
 		key_label.name = "label_" + key_names_2[i]
 		key_label.toggle_mode = true
 		key_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
@@ -88,6 +88,11 @@ func itsa_win():
 func itsa_loose():
 	print('game lost')
 
+
+func validate_input(expected_keys):
+	for key in expected_keys:
+		pass
+	
 func _input(event):
 	idle_duration = 0
 	
@@ -107,36 +112,50 @@ func _input(event):
 	var label_L = get_node("/root/root/keyboard_keys/label_L")
 	
 	
-		# UNE METHODE MOINS LABORIEUSE ?
+
+
 	
-#	if Input.is_physical_key_pressed(KEY_S):
-#		if starting == true:
-#			if label_S.button_pressed == false:
-#				print("S, go to D")
-#				label_S.button_pressed = true
-#				starting = false
-#			else:
-#				print('fail')
-#		else:
-#			if label_S.button_pressed == false and label_D.button_pressed == true:
-#				print("S, go to D")
-#				going_right = true
-#			else:
-#				print('fail')
-#	if Input.is_physical_key_pressed(KEY_D):
-#		if going_right == true:
-#			if label_D.button_pressed == false and label_S.button_pressed == true:
-#				print("D, go to F")
-#			else:
-#				print('fail')
-#		else:
-#			if label_D.button_pressed == false and label_F.button_pressed == true:
-#				print("D, go to S")
-#			else:
-#				print('fail')
-#	if Input.is_physical_key_pressed(KEY_F):
-#	if Input.is_physical_key_pressed(KEY_G):
-#	if Input.is_physical_key_pressed(KEY_H):
-#	if Input.is_physical_key_pressed(KEY_J):
-#	if Input.is_physical_key_pressed(KEY_K):
-#	if Input.is_physical_key_pressed(KEY_L):
+		# UNE METHODE MOINS LABORIEUSE ?
+	if escargo == true:
+		var expected_keys = ["S", "D"]
+		validate_input(expected_keys)
+		
+		 
+		if Input.is_physical_key_pressed(KEY_S):
+			if starting == true:
+				if label_S.button_pressed == false:
+					print("S, go to D")
+					label_S.button_pressed = true
+					starting = false
+				else:
+					print('fail')
+			else:
+				if label_S.button_pressed == false and label_D.button_pressed == true:
+					print("S, go to D")
+					going_right = true
+				else:
+					print('fail')
+		if Input.is_physical_key_pressed(KEY_D):
+			if going_right == true:
+				if label_D.button_pressed == false and label_S.button_pressed == true:
+					print("D, go to F")
+				else:
+					print('fail')
+			else:
+				if label_D.button_pressed == false and label_F.button_pressed == true:
+					print("D, go to S")
+				else:
+					print('fail')
+	#	if Input.is_physical_key_pressed(KEY_F):
+	#	if Input.is_physical_key_pressed(KEY_G):
+	#	if Input.is_physical_key_pressed(KEY_H):
+	#	if Input.is_physical_key_pressed(KEY_J):
+	#	if Input.is_physical_key_pressed(KEY_K):
+	#	if Input.is_physical_key_pressed(KEY_L):
+
+	else if millepatte == true
+		#	if Input.is_physical_key_pressed(KEY_F):
+		#	if Input.is_physical_key_pressed(KEY_G):
+		#	if Input.is_physical_key_pressed(KEY_H):
+		#	if Input.is_physical_key_pressed(KEY_J):
+		#	if Input.is_physical_key_pressed(KEY_K):
