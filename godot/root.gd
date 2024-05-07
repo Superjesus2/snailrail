@@ -34,14 +34,14 @@ const animals = {
 			"vitesse_max": 256.
 					},
 	"butterfly": {
-			"keycodes": [KEY_S, KEY_E, KEY_R,KEY_U, KEY_I, KEY_L],
-			"keylabels": ["S","E","R","U","I","L"],
+			"keycodes": [KEY_S, KEY_L, KEY_E,KEY_I, KEY_R, KEY_U],
+			"keylabels": ["S","L","E","I","R","U"],
 			"vitesse_max": 64.
 					},
 			# TODO
 }
 
-var cur_animal_id = "snail"
+var cur_animal_id = "butterfly"
 var cur_animal = animals[cur_animal_id]
 var keys_for_this_animal__keys = cur_animal["keycodes"]
 var keys_for_this_animal__labels = cur_animal["keylabels"]
@@ -196,6 +196,29 @@ func _input(event):
 			else:
 				_on_key_fail()
 				var pressed_key = keys_for_this_animal__keys.find(event.physical_keycode)
-				button_nodes[pressed_key].texture_normal = \
+				if pressed_key != -1 :
+					button_nodes[pressed_key].texture_normal = \
 										load("res://resources and assets/key_sprite_red.png")
-				
+				else:
+					_shake_keyboard()
+
+@onready var base_pos_labels = $keyboard_labels.position
+@onready var base_pos_keys = $keyboard_keys.position
+
+func _shake_keyboard():
+	var duration = .07
+	var radius = 8.
+	
+	var tw = get_tree().create_tween()
+	tw.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
+	for i in range(0,9):
+		var offset = Vector2(randf()-.5,randf()-.5).normalized()
+		var final1 = base_pos_labels + offset*radius
+		var final2 = base_pos_keys + offset*radius
+		tw.tween_property($keyboard_labels, "position", final1, duration)
+		tw.set_parallel(true)
+		tw.tween_property($keyboard_keys, "position", final2, duration)
+		tw.set_parallel(false)
+	tw.set_parallel(true)
+	tw.tween_property($keyboard_labels, "position", base_pos_labels, duration)
+	tw.tween_property($keyboard_keys, "position", base_pos_keys, duration)
