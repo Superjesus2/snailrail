@@ -1,9 +1,5 @@
 extends Node
 
-var which_key_is_pressed = []
-var current_keys = []
-var going_right = true
-var starting = true
 var elapsed_time = 0
 
 var is_slowed = false
@@ -46,34 +42,38 @@ const animals = {
 
 var cur_animal_id = "snail"
 var cur_animal = animals[cur_animal_id]
-var expected_keys = cur_animal["keycodes"]
-var expected_labels = cur_animal["keylabels"]
+var keys_for_this_animal__keys = cur_animal["keycodes"]
+var keys_for_this_animal__labels = cur_animal["keylabels"]
 var vitesse_max = cur_animal["vitesse_max"]
+
+# input system
+var going_right = true
+var starting = true
+var expected_key = keys_for_this_animal__keys[0]
 
 func _ready():
 	for key_name in all_key_names:
 		spawns[key_name] = $spawn_spots.get_node(key_name).position
 
 
-	for i in range(0,expected_keys.size()):
+	for i in range(0,keys_for_this_animal__keys.size()):
 		var key_button = TextureButton.new()
 		var key_label = Label.new()
-		current_keys.append(key_button)
 		$keyboard_keys.add_child(key_button)
 		$keyboard_labels.add_child(key_label)
 		key_button.texture_normal = load("res://resources and assets/key_sprite_normal.png")
 		key_button.texture_pressed = load("res://resources and assets/key_sprite_pressed.png")
 		key_button.texture_disabled = load("res://resources and assets/key_sprite_red.png")
 		key_button.texture_focused = load("res://resources and assets/key_sprite_green.png")
-		key_button.name = "label_" + expected_labels[i]
+		key_button.name = "label_" + keys_for_this_animal__labels[i]
 		key_button.toggle_mode = true
 		key_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
-		key_label.text = expected_labels[i]
+		key_label.text = keys_for_this_animal__labels[i]
 		key_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
 		key_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		key_label.modulate = Color("BROWN")
-		key_label.position = spawns[expected_labels[i]]
-		key_button.position = spawns[expected_labels[i]]
+		key_label.position = spawns[keys_for_this_animal__labels[i]]
+		key_button.position = spawns[keys_for_this_animal__labels[i]]
 		
 		
 		if key_label.text in key_names_3 :
@@ -92,7 +92,6 @@ func _ready():
 
 	start_snail()
 	start_other_candidates()
-	print(current_keys)
 
 func _process(_delta):
 # L'escargot bouge :
@@ -132,10 +131,12 @@ func _process(_delta):
 	$chrono_timer.text = "%.2f" % the_timer
 
 func _on_key_success():
+	print("key success")
 	vitesse += 1
 	is_snared = false
 	is_slowed = false
 func _on_key_fail():
+	print("key fail")
 	is_snared = true
 
 func start_snail():
@@ -151,7 +152,7 @@ func itsa_loose():
 	print('game lost')
 
 
-func validate_input(expect_key, event):
+func validate_input(expect_key, _event):
 	expect_key.clear()
 	for key in expect_key:
 		pass
@@ -164,38 +165,70 @@ func is_event_key_pressed(event, physical_keycode):
 	return false
 
 func _input(event):
+	
+	if event is InputEventKey:
+		if event.is_pressed() and not event.is_echo():
+			if event.physical_keycode == expected_key:
+				_on_key_success()
+				var cur_key_index = keys_for_this_animal__keys.find(expected_key)
+				if going_right and expected_key == keys_for_this_animal__keys[-1]:
+					going_right = false
+				elif not going_right and expected_key == keys_for_this_animal__keys[0]:
+					going_right = true
+				
+				var offset = 1 if going_right else -1
+				expected_key = keys_for_this_animal__keys[cur_key_index + offset]
+			else:
+				_on_key_fail()
+	
+	
+#	for key in keys_for_this_animal__keys:
+		# key c'est un keycode (KEY_S, KEY_D...)
+		# ce n'est pas forcément une touche qui a été pressé
+		
+		
+#		if is_event_key_pressed(event, key):
+#			idle_duration = 0
+#			pass
+	
+	
+	
+	
+	
+	
 	# reset idle duration when an expected key has been pressed
-	for key in expected_keys:
+	for key in keys_for_this_animal__keys:
 		if is_event_key_pressed(event, key):
 #			idle_duration = 0
 			pass
 
 	var any_valid_key_has_been_pressed = \
-						expected_keys.any(func(k):
+						keys_for_this_animal__keys.any(func(k):
 			return is_event_key_pressed(event,k))
 	if any_valid_key_has_been_pressed:
-		idle_duration = 0
+		pass
+#		idle_duration = 0
 	
 	
 		#DEBUG
-	if Input.is_physical_key_pressed(KEY_V):
-		_on_key_success()
-	if Input.is_physical_key_pressed(KEY_X):
-		_on_key_fail()
+#	if Input.is_physical_key_pressed(KEY_V):
+#		_on_key_success()
+#	if Input.is_physical_key_pressed(KEY_X):
+#		_on_key_fail()
 	
-	var label_S = get_node("/root/root/keyboard_keys/label_S")
-	var label_D = get_node("/root/root/keyboard_keys/label_D")
-	var label_F = get_node("/root/root/keyboard_keys/label_F")
-	var label_G = get_node("/root/root/keyboard_keys/label_G")
-	var label_H = get_node("/root/root/keyboard_keys/label_H")
-	var label_J = get_node("/root/root/keyboard_keys/label_J")
-	var label_K = get_node("/root/root/keyboard_keys/label_K")
-	var label_L = get_node("/root/root/keyboard_keys/label_L")
+#	var label_S = get_node("/root/root/keyboard_keys/label_S")
+#	var label_D = get_node("/root/root/keyboard_keys/label_D")
+#	var label_F = get_node("/root/root/keyboard_keys/label_F")
+#	var label_G = get_node("/root/root/keyboard_keys/label_G")
+#	var label_H = get_node("/root/root/keyboard_keys/label_H")
+#	var label_J = get_node("/root/root/keyboard_keys/label_J")
+#	var label_K = get_node("/root/root/keyboard_keys/label_K")
+#	var label_L = get_node("/root/root/keyboard_keys/label_L")
 	
 	
 		# UNE METHODE MOINS LABORIEUSE ?
 #	if escargo == true:
-#		var expected_keys = ["S", "D"]
+#		var keys_for_this_animal__keys = ["S", "D"]
 #		validate_input([14,2,3], event)
 		
 		
