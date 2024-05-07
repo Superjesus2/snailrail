@@ -15,30 +15,13 @@ var idle_duration = 0
 const key_names_1 = ["E","R","T","Y","U","I"]
 const key_names_2 = ["S","D","F","G","H","J","K","L"]
 const key_names_3 = ["V","B","N"]
+var all_key_names = key_names_1 + key_names_2 + key_names_3
 
 const finish_line_pos_x = -550
 const max_idle_duration = 1.2
 const vitesse_min = 0
 
-var spawns = {
-	"E":Vector2(150,25),
-	"R":Vector2(250,25),
-	"T":Vector2(350,25),
-	"Y":Vector2(450,25),
-	"U":Vector2(550,25),
-	"I":Vector2(650,25),
-	"S":Vector2(50,100),
-	"D":Vector2(150,100),
-	"F":Vector2(250,100),
-	"G":Vector2(350,100),
-	"H":Vector2(450,100),
-	"J":Vector2(550,100),
-	"K":Vector2(650,100),
-	"L":Vector2(750,100),
-	"V":Vector2(300,175),
-	"B":Vector2(400,175),
-	"N":Vector2(500,175),
-}
+var spawns = {}
 
 const animals = {
 	"snail": {
@@ -68,9 +51,8 @@ var expected_labels = cur_animal["keylabels"]
 var vitesse_max = cur_animal["vitesse_max"]
 
 func _ready():
-
-#	animals[cur_animal_id]["keycodes"][i]
-
+	for key_name in all_key_names:
+		spawns[key_name] = $spawn_spots.get_node(key_name).position
 
 
 	for i in range(0,expected_keys.size()):
