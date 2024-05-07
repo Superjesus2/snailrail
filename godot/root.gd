@@ -135,9 +135,11 @@ func _on_key_success():
 	vitesse += 1
 	is_snared = false
 	is_slowed = false
+	idle_duration = 0
 func _on_key_fail():
 	print("key fail")
 	is_snared = true
+	idle_duration = 0
 
 func start_snail():
 	pass
@@ -165,7 +167,6 @@ func is_event_key_pressed(event, physical_keycode):
 	return false
 
 func _input(event):
-	
 	if event is InputEventKey:
 		if event.is_pressed() and not event.is_echo():
 			if event.physical_keycode == expected_key:
@@ -180,93 +181,3 @@ func _input(event):
 				expected_key = keys_for_this_animal__keys[cur_key_index + offset]
 			else:
 				_on_key_fail()
-	
-	
-#	for key in keys_for_this_animal__keys:
-		# key c'est un keycode (KEY_S, KEY_D...)
-		# ce n'est pas forcément une touche qui a été pressé
-		
-		
-#		if is_event_key_pressed(event, key):
-#			idle_duration = 0
-#			pass
-	
-	
-	
-	
-	
-	
-	# reset idle duration when an expected key has been pressed
-	for key in keys_for_this_animal__keys:
-		if is_event_key_pressed(event, key):
-#			idle_duration = 0
-			pass
-
-	var any_valid_key_has_been_pressed = \
-						keys_for_this_animal__keys.any(func(k):
-			return is_event_key_pressed(event,k))
-	if any_valid_key_has_been_pressed:
-		pass
-#		idle_duration = 0
-	
-	
-		#DEBUG
-#	if Input.is_physical_key_pressed(KEY_V):
-#		_on_key_success()
-#	if Input.is_physical_key_pressed(KEY_X):
-#		_on_key_fail()
-	
-#	var label_S = get_node("/root/root/keyboard_keys/label_S")
-#	var label_D = get_node("/root/root/keyboard_keys/label_D")
-#	var label_F = get_node("/root/root/keyboard_keys/label_F")
-#	var label_G = get_node("/root/root/keyboard_keys/label_G")
-#	var label_H = get_node("/root/root/keyboard_keys/label_H")
-#	var label_J = get_node("/root/root/keyboard_keys/label_J")
-#	var label_K = get_node("/root/root/keyboard_keys/label_K")
-#	var label_L = get_node("/root/root/keyboard_keys/label_L")
-	
-	
-		# UNE METHODE MOINS LABORIEUSE ?
-#	if escargo == true:
-#		var keys_for_this_animal__keys = ["S", "D"]
-#		validate_input([14,2,3], event)
-		
-		
-#	if Input.is_physical_key_pressed(KEY_S):
-#		if starting == true:
-#			if label_S.button_pressed == false:
-#				print("S, go to D")
-#				label_S.button_pressed = true
-#				starting = false
-#			else:
-#				print('fail')
-#		else:
-#			if label_S.button_pressed == false and label_D.button_pressed == true:
-#				print("S, go to D")
-#				going_right = true
-#			else:
-#				print('fail')
-#		if Input.is_physical_key_pressed(KEY_D):
-#			if going_right == true:
-#				if label_D.button_pressed == false and label_S.button_pressed == true:
-#					print("D, go to F")
-#				else:
-#					print('fail')
-#			else:
-#				if label_D.button_pressed == false and label_F.button_pressed == true:
-#					print("D, go to S")
-#				else:
-#					print('fail')
-	#	if Input.is_physical_key_pressed(KEY_F):
-	#	if Input.is_physical_key_pressed(KEY_G):
-	#	if Input.is_physical_key_pressed(KEY_H):
-	#	if Input.is_physical_key_pressed(KEY_J):
-	#	if Input.is_physical_key_pressed(KEY_K):
-	#	if Input.is_physical_key_pressed(KEY_L):
-
-#	else if millepatte == true
-		#	if Input.is_physical_key_pressed(KEY_F):
-		#	if Input.is_physical_key_pressed(KEY_G):
-		#	if Input.is_physical_key_pressed(KEY_H):
-		#	if Input.is_physical_key_pressed(KEY_J):
-		#	if Input.is_physical_key_pressed(KEY_K):
