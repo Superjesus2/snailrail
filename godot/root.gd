@@ -12,6 +12,7 @@ const key_names_1 = ["E","R","T","Y","U","I"]
 const key_names_2 = ["S","D","F","G","H","J","K","L"]
 const key_names_3 = ["V","B","N"]
 var all_key_names = key_names_1 + key_names_2 + key_names_3
+var button_nodes = []
 
 const finish_line_pos_x = -550
 const max_idle_duration = 1.2
@@ -61,6 +62,7 @@ func _ready():
 		var key_label = Label.new()
 		$keyboard_keys.add_child(key_button)
 		$keyboard_labels.add_child(key_label)
+		button_nodes.append(key_button)
 		key_button.texture_normal = load("res://resources and assets/key_sprite_normal.png")
 		key_button.texture_pressed = load("res://resources and assets/key_sprite_pressed.png")
 		key_button.texture_disabled = load("res://resources and assets/key_sprite_red.png")
@@ -74,7 +76,6 @@ func _ready():
 		key_label.modulate = Color("BROWN")
 		key_label.position = spawns[keys_for_this_animal__labels[i]]
 		key_button.position = spawns[keys_for_this_animal__labels[i]]
-		
 		
 		if key_label.text in key_names_3 :
 			key_button.z_index = 5
@@ -131,13 +132,11 @@ func _process(_delta):
 	$chrono_timer.text = "%.2f" % the_timer
 
 func _on_key_success():
-	print("key success")
 	vitesse += 1
 	is_snared = false
 	is_slowed = false
 	idle_duration = 0
 func _on_key_fail():
-	print("key fail")
 	is_snared = true
 	idle_duration = 0
 
@@ -171,13 +170,32 @@ func _input(event):
 		if event.is_pressed() and not event.is_echo():
 			if event.physical_keycode == expected_key:
 				_on_key_success()
-				var cur_key_index = keys_for_this_animal__keys.find(expected_key)
+				for all in button_nodes :
+					all.texture_normal = \
+										load("res://resources and assets/key_sprite_normal.png")
+				var my_index = keys_for_this_animal__keys.find(expected_key)
 				if going_right and expected_key == keys_for_this_animal__keys[-1]:
 					going_right = false
 				elif not going_right and expected_key == keys_for_this_animal__keys[0]:
 					going_right = true
-				
 				var offset = 1 if going_right else -1
-				expected_key = keys_for_this_animal__keys[cur_key_index + offset]
+				expected_key = keys_for_this_animal__keys[my_index + offset]
+				var after_index = my_index + offset
+#				var last_index = my_index-1 if going_right else my_index+1
+#				if my_index == 0 :
+#					last_index = after_index
+#				elif my_index == keys_for_this_animal__keys.size() -1:
+#					last_index = after_index
+				
+				button_nodes[my_index].texture_normal = \
+										load("res://resources and assets/key_sprite_pressed.png")
+#				button_nodes[last_index].texture_normal = \
+#										load("res://resources and assets/key_sprite_normal.png")
+				button_nodes[after_index].texture_normal = \
+										load("res://resources and assets/key_sprite_green.png")
 			else:
 				_on_key_fail()
+				var pressed_key = keys_for_this_animal__keys.find(event.physical_keycode)
+				button_nodes[pressed_key].texture_normal = \
+										load("res://resources and assets/key_sprite_red.png")
+				
