@@ -33,6 +33,21 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Select Athlete"
 
+[node name="scores_button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 913.0
+offset_top = 452.0
+offset_right = 1064.0
+offset_bottom = 576.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "High
+Scores"
+
 [node name="exit_button" type="Button" parent="."]
 anchors_preset = 8
 anchor_left = 0.5

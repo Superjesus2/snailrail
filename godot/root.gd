@@ -3,10 +3,15 @@ extends CanvasItem
 func _ready():
 	$play_button.pressed.connect(func():play())
 	$player_button.pressed.connect(func():player_select())
+	$scores_button.pressed.connect(func():high_scores())
 	$exit_button.pressed.connect(func():exit())
+	
+	if globals.first_try :
+		$player_button.visible = false
+		$scores_button.visible = false
 
-func _process(delta):
-	pass
+func high_scores():
+	get_tree().change_scene_to_file("res://scores.tscn")
 
 func play():
 #	var game = preload("res://game.tscn").instantiate()

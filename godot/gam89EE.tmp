@@ -156,11 +156,3 @@ offset_left = 514.0
 offset_top = 5.0
 offset_right = 632.0
 offset_bottom = 70.0
-
-[node name="back_button" type="Button" parent="."]
-visible = false
-offset_left = 563.0
-offset_top = 555.0
-offset_right = 603.0
-offset_bottom = 595.0
-text = "Back"
