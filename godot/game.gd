@@ -16,6 +16,7 @@ const key_names_2 = ["S","D","F","G","H","J","K","L"]
 const key_names_3 = ["V","B","N"]
 var all_key_names = key_names_1 + key_names_2 + key_names_3
 var button_nodes = []
+var label_nodes = []
 
 const finish_line_pos_x = -550
 const max_idle_duration = 1.2
@@ -61,6 +62,8 @@ func _ready():
 		$keyboard_keys.add_child(key_button)
 		$keyboard_labels.add_child(key_label)
 		button_nodes.append(key_button)
+		label_nodes.append(key_label)
+		key_label.name = "labelled_" + keys_for_this_animal__labels[i]
 		key_button.name = "label_" + keys_for_this_animal__labels[i]
 		key_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
 		key_label.text = keys_for_this_animal__labels[i]
@@ -81,7 +84,8 @@ func _ready():
 			key_button.z_index = 3
 			key_label.z_index = 3
 		
-		
+		if key_button == button_nodes[0] :
+			key_button.texture_normal = key_sprite_green
 		# AJOUTER DES SPRITES AUX BOUTONS
 		# IL FAUT QUE LES SPAWNERS EXISTENT pour le composant 'TextureButton+LABEL'
 
@@ -112,7 +116,6 @@ func _process(_delta):
 	# jusqu'au bout du monde :
 	if backg_pos_x < finish_line_pos_x :
 		itsa_win()
-		vitesse = 0
 	# jusqu'à la mort
 	if the_timer < 0 :
 		itsa_loose()
@@ -147,11 +150,14 @@ func itsa_win():
 	if not game_over :
 		globals.score = "%.2f" % the_timer
 		%chrono_timer.text = globals.score
-		globals.high_scores.append(globals.score)
+		globals.best_scores.append(globals.score)
+		globals.best_errors.append(globals.errors)
+		globals.best_distances.append(globals.distance)
 		$back_button.visible = true
 		$keyboard_keys.visible = false
 		$keyboard_labels.visible = false
 	game_over = true
+	vitesse = 0
 
 func itsa_loose():
 	if not game_over :
@@ -162,8 +168,7 @@ func itsa_loose():
 		$keyboard_keys.visible = false
 		$keyboard_labels.visible = false
 	game_over = true
-
-
+	vitesse = 0
 
 func validate_input(expect_key, _event):
 	expect_key.clear()
@@ -182,6 +187,11 @@ func _input(event):
 	if event is InputEventKey:
 		if event.is_pressed() and not event.is_echo():
 			if event.physical_keycode == expected_key:
+				
+				for all in label_nodes :
+					if keys_for_this_animal__keys.find(event.physical_keycode) != -1 :
+						pass
+				
 				_on_key_success()
 				for all in button_nodes :
 					all.texture_normal = key_sprite_normal
@@ -213,13 +223,14 @@ func _input(event):
 			elif event.physical_keycode == KEY_ESCAPE :
 				itsa_loose()
 			else:
-				_on_key_fail()
-				globals.errors += 1
-				var pressed_key = keys_for_this_animal__keys.find(event.physical_keycode)
-				if pressed_key != -1 :
-					button_nodes[pressed_key].texture_normal = key_sprite_red
-				else:
-					_shake_keyboard()
+				if not game_over :
+					_on_key_fail()
+					globals.errors += 1
+					var pressed_key = keys_for_this_animal__keys.find(event.physical_keycode)
+					if pressed_key != -1 :
+						button_nodes[pressed_key].texture_normal = key_sprite_red
+					else:
+						_shake_keyboard()
 
 @onready var base_pos_labels = $keyboard_labels.position
 @onready var base_pos_keys = $keyboard_keys.position
