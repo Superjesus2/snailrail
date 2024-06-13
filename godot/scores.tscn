@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dsawx68nio07w"]
+
+[node name="scores" type="Node2D"]
+
+[node name="back_button" type="Button" parent="."]
+offset_left = 624.0
+offset_top = 776.0
+offset_right = 788.0
+offset_bottom = 851.0
+text = "Back"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+visible = false
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1336.0
+offset_bottom = 704.0
+columns = 5

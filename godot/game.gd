@@ -1,7 +1,8 @@
 extends Node
 
 var elapsed_time = 0
-var the_timer = 60
+var the_timer = 0
+var start_timer = 3
 var game_over
 
 var is_slowed = false
@@ -47,6 +48,7 @@ func _ready():
 	
 	globals.first_try = false
 	$back_button.pressed.connect(func():back())
+	$retry_button.pressed.connect(func():retry())
 	$player.texture = load(player_sprite)
 	
 	for key_name in all_key_names:
@@ -122,8 +124,15 @@ func _process(_delta):
 	elapsed_time += _delta
 	the_timer = 60 - elapsed_time
 	if not game_over :
-		$chrono_timer.text = "%.2f" % the_timer
+		%chrono_timer.text = "%.2f" % the_timer
 
+# L'espace tend :
+	%distance_counter.text = str(globals.distance)
+# Le score s'tasse :
+	%error_counter.text = str(globals.errors)
+
+func retry():
+	get_tree().change_scene_to_file("res://game.tscn")
 
 func _on_key_success():
 	vitesse += 1
@@ -137,7 +146,7 @@ func _on_key_fail():
 func itsa_win():
 	if not game_over :
 		globals.score = "%.2f" % the_timer
-		$chrono_timer.text = globals.score
+		%chrono_timer.text = globals.score
 		globals.high_scores.append(globals.score)
 		$back_button.visible = true
 		$keyboard_keys.visible = false
@@ -146,9 +155,10 @@ func itsa_win():
 
 func itsa_loose():
 	if not game_over :
-		globals.score = 0
-		$chrono_timer.text = "%.2f" % globals.score
+		globals.score = the_timer
+		%chrono_timer.text = "%.2f" % globals.score
 		$back_button.visible = true
+		$retry_button.visible = true
 		$keyboard_keys.visible = false
 		$keyboard_labels.visible = false
 	game_over = true
@@ -200,8 +210,11 @@ func _input(event):
 				
 				button_nodes[my_index].texture_normal = key_sprite_pressed
 				button_nodes[after_index].texture_normal = key_sprite_green
+			elif event.physical_keycode == KEY_ESCAPE :
+				itsa_loose()
 			else:
 				_on_key_fail()
+				globals.errors += 1
 				var pressed_key = keys_for_this_animal__keys.find(event.physical_keycode)
 				if pressed_key != -1 :
 					button_nodes[pressed_key].texture_normal = key_sprite_red

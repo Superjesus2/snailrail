@@ -1,8 +1,7 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://b3nsicbf6e401"]
 
-[sub_resource type="SystemFont" id="SystemFont_ne632"]
-font_weight = 700
+[ext_resource type="FontFile" uid="uid://dr1r0yd6wtxxd" path="res://Typewriter/cmuntb.ttf" id="1_6qmwr"]
 
 [resource]
-default_font = SubResource("SystemFont_ne632")
-default_font_size = 42
+default_font = ExtResource("1_6qmwr")
+default_font_size = 50

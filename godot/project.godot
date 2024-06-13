@@ -19,9 +19,16 @@ config/icon="res://icon.svg"
 
 globals="*res://globals.gd"
 
+[display]
+
+window/size/viewport_width=1400
+window/size/viewport_height=900
+window/stretch/mode="viewport"
+
 [gui]
 
 theme/custom="res://escarg.tres"
+theme/custom_font="res://resources and assets/kirifont/KiriFont.ttf"
 
 [input]
 
@@ -34,5 +41,6 @@ theme/custom="res://escarg.tres"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

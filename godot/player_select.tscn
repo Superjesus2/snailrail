@@ -7,27 +7,28 @@
 script = ExtResource("1_ojlwf")
 
 [node name="back_button" type="Button" parent="."]
-offset_left = 563.0
-offset_top = 555.0
-offset_right = 603.0
-offset_bottom = 595.0
-text = "Back"
+offset_left = 624.0
+offset_top = 760.0
+offset_right = 788.0
+offset_bottom = 843.0
+text = "Select"
 
 [node name="left_select" type="Button" parent="."]
-offset_left = 320.0
-offset_top = 293.0
-offset_right = 352.0
-offset_bottom = 359.0
+offset_left = 192.0
+offset_top = 320.0
+offset_right = 256.0
+offset_bottom = 448.0
 text = "<
 "
 
 [node name="right_select" type="Button" parent="."]
-offset_left = 844.0
-offset_top = 288.0
-offset_right = 876.0
-offset_bottom = 354.0
+offset_left = 1152.0
+offset_top = 320.0
+offset_right = 1216.0
+offset_bottom = 448.0
 text = ">"
 
 [node name="player_pic" type="Sprite2D" parent="."]
-position = Vector2(592, 290)
+position = Vector2(704.873, 353.812)
+scale = Vector2(1.32306, 1.32306)
 texture = ExtResource("2_6klfx")

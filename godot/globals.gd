@@ -1,7 +1,9 @@
 extends Node
 
 var player_selected = 0
-var score
+var score = 60
+var distance = 0
+var errors = 0
 var high_scores = []
 var first_try = true
 
