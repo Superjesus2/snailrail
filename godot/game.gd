@@ -23,10 +23,10 @@ const finish_line_pos_x = 2500
 const max_idle_duration = 1.2
 const vitesse_min = 0
 
-var key_sprite_normal = load("res://resources and assets/key_sprite_normal.png")
-var key_sprite_pressed = load("res://resources and assets/key_sprite_pressed.png")
-var key_sprite_red = load("res://resources and assets/key_sprite_red.png")
-var key_sprite_green = load("res://resources and assets/key_sprite_green.png")
+var key_sprite_normal = load("res://resources and assets/GUI/key_sprite_normal.png")
+var key_sprite_pressed = load("res://resources and assets/GUI/key_sprite_pressed.png")
+var key_sprite_red = load("res://resources and assets/GUI/key_sprite_red.png")
+var key_sprite_green = load("res://resources and assets/GUI/key_sprite_green.png")
 
 var spawns = {}
 
@@ -50,7 +50,7 @@ func _ready():
 	globals.first_try = false
 	%back_button.pressed.connect(func():back())
 	%retry_button.pressed.connect(func():retry())
-	$player.texture = load(player_sprite)
+	$player.texture = load(player_sprite[0])
 	
 	for key_name in all_key_names:
 		spawns[key_name] = $spawn_spots.get_node(key_name).position
@@ -107,12 +107,16 @@ func _process(_delta):
 		vitesse = vitesse_max
 	# avec style :
 		# ANIMATION
-		if vitesse < vitesse_max/2 :
-			pass
-		if vitesse < vitesse_max/4 :
-			pass
-		if vitesse > vitesse_max/2 :
-			pass
+	if vitesse < vitesse_max/3 :
+		$player.texture = load(player_sprite[0])
+	if vitesse < vitesse_max/1.5 and vitesse > vitesse_max/3 :
+		$player.texture = load(player_sprite[1])
+	if vitesse > vitesse_max/1.5 :
+		$player.texture = load(player_sprite[2])
+	if is_snared and not vitesse == 0 :
+		$player.texture = load(player_sprite[3])
+	if vitesse == 0 :
+		$player.texture = load(player_sprite[0])
 	# jusqu'au bout du monde :
 	if player_pos_x > finish_line_pos_x :
 		itsa_win()
