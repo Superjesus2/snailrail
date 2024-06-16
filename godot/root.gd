@@ -1,13 +1,17 @@
 extends CanvasItem
 
+var cur_animal_id = globals.players[globals.player_selected]
+var cur_animal = globals.animals[cur_animal_id]
+var player_sprite = cur_animal["sprite"]
+
 func _ready():
 	$play_button.pressed.connect(func():play())
 	$player_button.pressed.connect(func():player_select())
 	$scores_button.pressed.connect(func():high_scores())
 	$exit_button.pressed.connect(func():exit())
+	$player.texture = load(player_sprite)
 	
 	if globals.first_try :
-		$player_button.visible = false
 		$scores_button.visible = false
 
 func high_scores():

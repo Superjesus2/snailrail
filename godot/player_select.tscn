@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://rwfyl5afltlg"]
+[gd_scene load_steps=4 format=3 uid="uid://rwfyl5afltlg"]
 
 [ext_resource type="Script" path="res://player_select.gd" id="1_ojlwf"]
 [ext_resource type="Texture2D" uid="uid://ctsdb3jv5qql7" path="res://resources and assets/snail_sprite.png" id="2_6klfx"]
+[ext_resource type="Texture2D" uid="uid://cdg5q62fy0kqp" path="res://resources and assets/backg_sprite.png" id="2_6oqso"]
 
 [node name="player_select" type="Node2D"]
 script = ExtResource("1_ojlwf")
+
+[node name="BackgSprite" type="Sprite2D" parent="."]
+position = Vector2(736, 1261)
+scale = Vector2(8.53253, 8.53253)
+texture = ExtResource("2_6oqso")
 
 [node name="back_button" type="Button" parent="."]
 offset_left = 624.0
@@ -29,6 +35,6 @@ offset_bottom = 448.0
 text = ">"
 
 [node name="player_pic" type="Sprite2D" parent="."]
-position = Vector2(704.873, 353.812)
+position = Vector2(662, 430)
 scale = Vector2(1.32306, 1.32306)
 texture = ExtResource("2_6klfx")

@@ -1,12 +1,17 @@
 extends Node
 
 var player_selected = 0
-var score = 60
+var time = 60
 var distance = 0
 var errors = 0
-var best_scores = []
-var best_distances = []
-var best_errors = []
+#var best_players = ["snail", "slug", "elephant"]
+#var best_times = [32.14,50.20,3]
+#var best_distances = [500,18,22]
+#var best_errors = [0,2,3]
+var times_played = 0
+
+var high_scores = [["snail", 58.42, "0", 0], ["snail", 58.42, "0", 0]]
+
 var first_try = true
 
 var players = ["snail","slug","elephant","butterfly","spider","centipede"]

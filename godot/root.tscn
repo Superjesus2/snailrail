@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://csciwvsy10xdt"]
+[gd_scene load_steps=4 format=3 uid="uid://csciwvsy10xdt"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_q3ejy"]
+[ext_resource type="Texture2D" uid="uid://cdg5q62fy0kqp" path="res://resources and assets/backg_sprite.png" id="2_1dtda"]
+[ext_resource type="Texture2D" uid="uid://ctsdb3jv5qql7" path="res://resources and assets/snail_sprite.png" id="3_7rxxw"]
 
 [node name="root" type="Node2D"]
 script = ExtResource("1_q3ejy")
+
+[node name="BackgSprite" type="Sprite2D" parent="."]
+position = Vector2(706, 449)
+scale = Vector2(1.53401, 1.53401)
+texture = ExtResource("2_1dtda")
 
 [node name="play_button" type="Button" parent="."]
 anchors_preset = 8
@@ -61,3 +68,8 @@ offset_bottom = 827.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Exit"
+
+[node name="player" type="Sprite2D" parent="."]
+position = Vector2(233, 696)
+scale = Vector2(0.583979, 0.583979)
+texture = ExtResource("3_7rxxw")

@@ -4,11 +4,12 @@ var elapsed_time = 0
 var the_timer = 0
 var start_timer = 3
 var game_over
+var starting = true
 
 var is_slowed = false
 var is_snared = false
 var vitesse = 0.
-var backg_pos_x = 1200
+var player_pos_x = 0
 var idle_duration = 0
 
 const key_names_1 = ["E","R","T","Y","U","I"]
@@ -18,7 +19,7 @@ var all_key_names = key_names_1 + key_names_2 + key_names_3
 var button_nodes = []
 var label_nodes = []
 
-const finish_line_pos_x = -550
+const finish_line_pos_x = 2500
 const max_idle_duration = 1.2
 const vitesse_min = 0
 
@@ -39,28 +40,26 @@ var can_go_left = cur_animal["can go left"]
 
 # input system
 var going_right = true
-var starting = true
 var expected_key = keys_for_this_animal__keys[0]
 
 func back():
 	get_tree().change_scene_to_file("res://root.tscn")
 
 func _ready():
-	
+
 	globals.first_try = false
-	$back_button.pressed.connect(func():back())
-	$retry_button.pressed.connect(func():retry())
+	%back_button.pressed.connect(func():back())
+	%retry_button.pressed.connect(func():retry())
 	$player.texture = load(player_sprite)
 	
 	for key_name in all_key_names:
 		spawns[key_name] = $spawn_spots.get_node(key_name).position
 
-
 	for i in range(0,keys_for_this_animal__keys.size()):
 		var key_button = TextureButton.new()
 		var key_label = Label.new()
-		$keyboard_keys.add_child(key_button)
-		$keyboard_labels.add_child(key_label)
+		%keyboard_keys.add_child(key_button)
+		%keyboard_labels.add_child(key_label)
 		button_nodes.append(key_button)
 		label_nodes.append(key_label)
 		key_label.name = "labelled_" + keys_for_this_animal__labels[i]
@@ -90,15 +89,16 @@ func _ready():
 		# IL FAUT QUE LES SPAWNERS EXISTENT pour le composant 'TextureButton+LABEL'
 
 func _process(_delta):
+	
 # L'escargot bouge :
-	$backg.position.x -= _delta * vitesse
-	backg_pos_x -= _delta * vitesse
+	$player.position.x += _delta * vitesse
+	player_pos_x += _delta * vitesse
 	# de moins en moins vite
 	if is_slowed == true :
-		vitesse -= (vitesse/100) + 0.003
+		vitesse -= (vitesse/80) + 0.004
 	# de zéro
 	if is_snared == true :
-		vitesse -= 1.1
+		vitesse -= 1.2
 	# jamais moins de zéro :
 	if vitesse < vitesse_min :
 		vitesse = vitesse_min
@@ -114,24 +114,24 @@ func _process(_delta):
 		if vitesse > vitesse_max/2 :
 			pass
 	# jusqu'au bout du monde :
-	if backg_pos_x < finish_line_pos_x :
+	if player_pos_x > finish_line_pos_x :
 		itsa_win()
 	# jusqu'à la mort
 	if the_timer < 0 :
 		itsa_loose()
 
-# Le temps passe :
+	# Le temps passe :
+	if not game_over :
+		%chrono_timer.text = "%.2f" % the_timer + 's'
+		globals.distance = "%.0f" % (player_pos_x/5)
 	idle_duration += _delta
 	if idle_duration > max_idle_duration :
 		is_slowed = true
 	elapsed_time += _delta
 	the_timer = 60 - elapsed_time
-	if not game_over :
-		%chrono_timer.text = "%.2f" % the_timer
-
-# L'espace tend :
-	%distance_counter.text = str(globals.distance)
-# Le score s'tasse :
+	# L'espace tend :
+	%distance_counter.text = str(globals.distance) + ' m'
+	# Le score s'tasse :
 	%error_counter.text = str(globals.errors)
 
 func retry():
@@ -148,27 +148,36 @@ func _on_key_fail():
 
 func itsa_win():
 	if not game_over :
-		globals.score = "%.2f" % the_timer
-		%chrono_timer.text = globals.score
-		globals.best_scores.append(globals.score)
-		globals.best_errors.append(globals.errors)
-		globals.best_distances.append(globals.distance)
-		$back_button.visible = true
-		$keyboard_keys.visible = false
-		$keyboard_labels.visible = false
+		globals.time = "%.2f" % the_timer
+		%chrono_timer.text = globals.time
+		scores()
+		%back_button.visible = true
+		%keyboard_keys.visible = false
+		%keyboard_labels.visible = false
 	game_over = true
 	vitesse = 0
 
 func itsa_loose():
 	if not game_over :
-		globals.score = the_timer
-		%chrono_timer.text = "%.2f" % globals.score
-		$back_button.visible = true
-		$retry_button.visible = true
-		$keyboard_keys.visible = false
-		$keyboard_labels.visible = false
+		if the_timer < 0 :
+			the_timer = 0
+		globals.time = snapped(the_timer, 0.01)
+		%chrono_timer.text = "%.2f" % globals.time + 's'
+		scores()
+		%back_button.visible = true
+		%retry_button.visible = true
+		%keyboard_keys.visible = false
+		%keyboard_labels.visible = false
 	game_over = true
 	vitesse = 0
+
+func scores():
+		globals.high_scores.append([globals.players[globals.player_selected],\
+									globals.time,\
+									globals.distance,\
+									globals.errors])
+		print(globals.high_scores)
+		globals.times_played += 1
 
 func validate_input(expect_key, _event):
 	expect_key.clear()
@@ -232,8 +241,8 @@ func _input(event):
 					else:
 						_shake_keyboard()
 
-@onready var base_pos_labels = $keyboard_labels.position
-@onready var base_pos_keys = $keyboard_keys.position
+@onready var base_pos_labels = %keyboard_labels.position
+@onready var base_pos_keys = %keyboard_keys.position
 
 func _shake_keyboard():
 	var duration = .07
@@ -245,10 +254,10 @@ func _shake_keyboard():
 		var offset = Vector2(randf()-.5,randf()-.5).normalized()
 		var final1 = base_pos_labels + offset*radius
 		var final2 = base_pos_keys + offset*radius
-		tw.tween_property($keyboard_labels, "position", final1, duration)
+		tw.tween_property(%keyboard_labels, "position", final1, duration)
 		tw.set_parallel(true)
-		tw.tween_property($keyboard_keys, "position", final2, duration)
+		tw.tween_property(%keyboard_keys, "position", final2, duration)
 		tw.set_parallel(false)
 	tw.set_parallel(true)
-	tw.tween_property($keyboard_labels, "position", base_pos_labels, duration)
-	tw.tween_property($keyboard_keys, "position", base_pos_keys, duration)
+	tw.tween_property(%keyboard_labels, "position", base_pos_labels, duration)
+	tw.tween_property(%keyboard_keys, "position", base_pos_keys, duration)
