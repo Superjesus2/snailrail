@@ -10,7 +10,11 @@ var errors = 0
 #var best_errors = [0,2,3]
 var times_played = 0
 
-var high_scores = [["snail", 58.42, "0", 0], ["snail", 58.42, "0", 0]]
+var high_scores = [["snail", 58.42, "0", 0],
+["snail", 31.45, "500", 6],
+["centipede", 60, "386", 17],
+["slug", 23.24, "500", 24],
+["butterfly", 26.07, "500", 26],]
 
 var first_try = true
 
@@ -26,6 +30,7 @@ const animals = {
 			"res://resources and assets/sprites/snail_sprite_3.png",] ,
 			"vitesse_max": 150. ,
 			"can go left": true ,
+			"is animated": false ,
 					},
 	"slug": {
 			"keycodes": [KEY_D, KEY_F, KEY_G, KEY_H, KEY_J, KEY_K],
@@ -36,6 +41,7 @@ const animals = {
 			"res://resources and assets/sprites/slug_sprite_3.png",] ,
 			"vitesse_max": 110. ,
 			"can go left": true ,
+			"is animated": false ,
 					},
 	"butterfly": {
 			"keycodes": [KEY_S, KEY_L, KEY_E,KEY_I, KEY_R, KEY_U],
@@ -46,6 +52,7 @@ const animals = {
 			"res://resources and assets/sprites/butterfly_sprite_3.png",] ,
 			"vitesse_max": 100. ,
 			"can go left": false ,
+			"is animated": true ,
 					},
 	"spider": {
 			"keycodes": [KEY_S, KEY_L, KEY_E,KEY_I, KEY_F, KEY_J, KEY_T, KEY_Y,],
@@ -56,6 +63,7 @@ const animals = {
 			"res://resources and assets/sprites/spider_sprite_3.png",] ,
 			"vitesse_max": 200. ,
 			"can go left": false ,
+			"is animated": true ,
 					},
 	"centipede": {
 			"keycodes": [KEY_S, KEY_E, KEY_R, KEY_D, KEY_V, KEY_F, KEY_T, KEY_Y, \
@@ -68,6 +76,7 @@ const animals = {
 			"res://resources and assets/sprites/centipede_sprite_3.png",] ,
 			"vitesse_max": 300. ,
 			"can go left": true ,
+			"is animated": true ,
 					},
 	"elephant": {
 			"keycodes": [KEY_S,KEY_F,KEY_H,KEY_K,KEY_D,KEY_G,KEY_J,KEY_L],
@@ -78,6 +87,7 @@ const animals = {
 			"res://resources and assets/sprites/elephant_sprite_3.png",] ,
 			"vitesse_max": 150. ,
 			"can go left": false ,
+			"is animated": true ,
 					},
 	# TODO
 }

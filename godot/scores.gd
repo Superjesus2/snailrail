@@ -12,10 +12,11 @@ func _ready():
 		var score_liner = HBoxContainer.new()
 		score_liner.alignment = BoxContainer.ALIGNMENT_CENTER
 		score_liner.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
-		var best_player = Label.new()
-		best_player.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
-		best_player.size_flags_vertical = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
-		best_player.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		score_liner.name = 'score_liner'
+		var best_player = Sprite2D.new()
+#		best_player.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
+#		best_player.size_flags_vertical = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
+#		best_player.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		var best_time = Label.new()
 		best_time.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
 		best_time.size_flags_vertical = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND_FILL
@@ -36,10 +37,20 @@ func _ready():
 		score_liner.add_child(best_time)
 		score_liner.add_child(best_distance)
 		score_liner.add_child(best_error)
-		best_player.text = str(globals.high_scores[index][0])
-		best_time.text = str(globals.high_scores[index][1])
-		best_distance.text = str(globals.high_scores[index][2])
+		var cur_animal_id = globals.high_scores[index][0]
+		var cur_animal = globals.animals[cur_animal_id]
+		var player_sprite = cur_animal["sprite"]
+		best_player.texture = load(player_sprite[0])
+		best_time.text = str(globals.high_scores[index][1]) + 's'
+		best_distance.text = str(globals.high_scores[index][2]) + 'm'
 		best_error.text = str(globals.high_scores[index][3])
-
+		best_error.modulate = Color.RED
+		if globals.high_scores[index][3] == 0 :
+			best_error.modulate = Color.GREEN
+		if globals.high_scores[index][2] == '500' :
+			best_distance.modulate = Color.WEB_GREEN
+		var hue_time = remap((globals.high_scores[index][1]), 0, 60, 0.48, 0)
+		best_time.modulate = Color.from_hsv(hue_time,1,1)
+			
 func back():
 	get_tree().change_scene_to_file("res://root.tscn")

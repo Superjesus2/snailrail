@@ -9,7 +9,7 @@ func _ready():
 	$player_button.pressed.connect(func():player_select())
 	$scores_button.pressed.connect(func():high_scores())
 	$exit_button.pressed.connect(func():exit())
-	$player.texture = load(player_sprite)
+	$player.texture = load(player_sprite[0])
 	
 	if globals.first_try :
 		$scores_button.visible = false

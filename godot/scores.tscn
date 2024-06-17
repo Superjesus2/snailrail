@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsawx68nio07w"]
+[gd_scene load_steps=4 format=3 uid="uid://dsawx68nio07w"]
 
 [ext_resource type="Script" path="res://scores.gd" id="1_4umm1"]
 [ext_resource type="Texture2D" uid="uid://cdg5q62fy0kqp" path="res://resources and assets/backg_sprite.png" id="2_7j4m7"]
+
+[sub_resource type="Theme" id="Theme_ylspt"]
+default_font_size = 56
 
 [node name="scores" type="Node2D"]
 script = ExtResource("1_4umm1")
@@ -29,12 +32,13 @@ size_flags_stretch_ratio = 2.69
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = SubResource("Theme_ylspt")
 
-[node name="score_liner" type="HBoxContainer" parent="scroller/lines"]
+[node name="score_liner dummy" type="HBoxContainer" parent="scroller/lines"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="scroller/lines/score_liner"]
+[node name="Label dummy" type="Label" parent="scroller/lines/score_liner dummy"]
 layout_mode = 2
 horizontal_alignment = 1

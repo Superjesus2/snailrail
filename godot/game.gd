@@ -37,6 +37,7 @@ var keys_for_this_animal__keys = cur_animal["keycodes"]
 var keys_for_this_animal__labels = cur_animal["keylabels"]
 var vitesse_max = cur_animal["vitesse_max"]
 var can_go_left = cur_animal["can go left"]
+var is_animated = cur_animal["is animated"]
 
 # input system
 var going_right = true
@@ -47,6 +48,7 @@ func back():
 
 func _ready():
 
+	globals.errors = 0
 	globals.first_try = false
 	%back_button.pressed.connect(func():back())
 	%retry_button.pressed.connect(func():retry())
@@ -107,16 +109,21 @@ func _process(_delta):
 		vitesse = vitesse_max
 	# avec style :
 		# ANIMATION
-	if vitesse < vitesse_max/3 :
-		$player.texture = load(player_sprite[0])
-	if vitesse < vitesse_max/1.5 and vitesse > vitesse_max/3 :
-		$player.texture = load(player_sprite[1])
-	if vitesse > vitesse_max/1.5 :
-		$player.texture = load(player_sprite[2])
-	if is_snared and not vitesse == 0 :
-		$player.texture = load(player_sprite[3])
-	if vitesse == 0 :
-		$player.texture = load(player_sprite[0])
+	if is_animated :
+		pass
+		
+	else :
+		if vitesse < vitesse_max/3 :
+			$player.texture = load(player_sprite[0])
+		if vitesse < vitesse_max/1.5 and vitesse > vitesse_max/3 :
+			$player.texture = load(player_sprite[1])
+		if vitesse > vitesse_max/1.5 :
+			$player.texture = load(player_sprite[2])
+		if is_snared and not vitesse == 0 :
+			$player.texture = load(player_sprite[3])
+		if vitesse == 0 :
+			$player.texture = load(player_sprite[0])
+			
 	# jusqu'au bout du monde :
 	if player_pos_x > finish_line_pos_x :
 		itsa_win()
@@ -146,14 +153,19 @@ func _on_key_success():
 	is_snared = false
 	is_slowed = false
 	idle_duration = 0
+	if is_animated :
+		animate()
+
 func _on_key_fail():
 	is_snared = true
 	idle_duration = 0
+	if is_animated :
+		animate()
 
 func itsa_win():
 	if not game_over :
-		globals.time = "%.2f" % the_timer
-		%chrono_timer.text = globals.time
+		globals.time = snapped(the_timer, 0.01)
+		%chrono_timer.text = "%.2f" % globals.time + 's'
 		scores()
 		%back_button.visible = true
 		%keyboard_keys.visible = false
@@ -165,7 +177,7 @@ func itsa_loose():
 	if not game_over :
 		if the_timer < 0 :
 			the_timer = 0
-		globals.time = snapped(the_timer, 0.01)
+		globals.time = 60 - snapped(the_timer, 0.01)
 		%chrono_timer.text = "%.2f" % globals.time + 's'
 		scores()
 		%back_button.visible = true
@@ -174,6 +186,9 @@ func itsa_loose():
 		%keyboard_labels.visible = false
 	game_over = true
 	vitesse = 0
+
+func animate():
+	pass
 
 func scores():
 		globals.high_scores.append([globals.players[globals.player_selected],\

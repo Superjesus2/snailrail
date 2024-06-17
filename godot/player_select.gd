@@ -5,7 +5,7 @@ var cur_animal = globals.animals[cur_animal_id]
 var player_sprite = cur_animal["sprite"]
 
 func _ready():
-	$player_pic.texture = load(player_sprite)
+	$player_pic.texture = load(player_sprite[0])
 	$back_button.pressed.connect(func():back())
 	$left_select.pressed.connect(func():left())
 	$right_select.pressed.connect(func():right())
@@ -21,7 +21,7 @@ func left():
 	cur_animal_id = globals.players[globals.player_selected]
 	cur_animal = globals.animals[cur_animal_id]
 	player_sprite = cur_animal["sprite"]
-	$player_pic.texture = load(player_sprite)
+	$player_pic.texture = load(player_sprite[0])
 	
 func right():
 	if globals.player_selected < (globals.players.size() - 1):
@@ -32,4 +32,4 @@ func right():
 	cur_animal_id = globals.players[globals.player_selected]
 	cur_animal = globals.animals[cur_animal_id]
 	player_sprite = cur_animal["sprite"]
-	$player_pic.texture = load(player_sprite)
+	$player_pic.texture = load(player_sprite[0])
