@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dh8yqstallxr4"]
+[gd_scene load_steps=7 format=3 uid="uid://dh8yqstallxr4"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_2w4w3"]
 [ext_resource type="Texture2D" uid="uid://cdg5q62fy0kqp" path="res://resources and assets/backg_sprite.png" id="2_iip1e"]
 [ext_resource type="Texture2D" uid="uid://bu3esq30fxktj" path="res://resources and assets/sprites/snail_sprite_0.png" id="3_vhuep"]
 [ext_resource type="Theme" uid="uid://b3nsicbf6e401" path="res://escarg.tres" id="4_3w5jc"]
+[ext_resource type="StyleBox" uid="uid://cfw3eluehp25v" path="res://labels.tres" id="6_6apnl"]
 [ext_resource type="FontFile" uid="uid://btq5jgimhq6kv" path="res://resources and assets/fonts/montreal/Montreal-Bold.ttf" id="6_asijh"]
 
 [node name="root" type="Node2D"]
@@ -161,60 +162,75 @@ offset_bottom = 154.0
 [node name="back_button" type="Button" parent="HUD"]
 unique_name_in_owner = true
 visible = false
-offset_left = 648.0
+offset_left = 643.0
 offset_top = 752.0
-offset_right = 760.0
+offset_right = 765.0
 offset_bottom = 827.0
 text = "Back"
 
 [node name="retry_button" type="Button" parent="HUD"]
 unique_name_in_owner = true
 visible = false
-offset_left = 632.0
+offset_left = 625.0
 offset_top = 664.0
-offset_right = 776.0
+offset_right = 783.0
 offset_bottom = 739.0
 text = "Retry"
 
 [node name="error_counter" type="Label" parent="HUD"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
 offset_left = 350.0
-offset_top = 5.0
-offset_right = 428.0
-offset_bottom = 67.0
+offset_top = 10.0
+offset_right = 460.0
+offset_bottom = 92.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 0.247059, 0.188235, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("6_asijh")
+theme_override_styles/normal = ExtResource("6_6apnl")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="chrono_timer" type="Label" parent="HUD"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 0)
 offset_left = 590.0
-offset_top = 5.0
+offset_top = 10.0
 offset_right = 668.0
-offset_bottom = 67.0
+offset_bottom = 72.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("6_asijh")
+theme_override_styles/normal = ExtResource("6_6apnl")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="distance_counter" type="Label" parent="HUD"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 offset_left = 972.0
-offset_top = 5.0
+offset_top = 10.0
 offset_right = 1050.0
-offset_bottom = 67.0
+offset_bottom = 72.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("6_asijh")
+theme_override_styles/normal = ExtResource("6_6apnl")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="camera_player" type="Camera2D" parent="."]
 position = Vector2(182, 469)

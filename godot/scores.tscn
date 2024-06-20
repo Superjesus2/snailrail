@@ -1,7 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsawx68nio07w"]
+[gd_scene load_steps=6 format=3 uid="uid://dsawx68nio07w"]
 
 [ext_resource type="Script" path="res://scores.gd" id="1_4umm1"]
 [ext_resource type="Texture2D" uid="uid://cdg5q62fy0kqp" path="res://resources and assets/backg_sprite.png" id="2_7j4m7"]
+[ext_resource type="Texture2D" uid="uid://behmqsiw2dh6c" path="res://resources and assets/elephant_sprite.png" id="3_cpqqx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbdgs"]
+bg_color = Color(0, 0, 0, 0.603922)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.364706, 1)
+border_blend = true
 
 [sub_resource type="Theme" id="Theme_ylspt"]
 default_font_size = 56
@@ -22,17 +32,19 @@ offset_bottom = 851.0
 text = "Back"
 
 [node name="scroller" type="ScrollContainer" parent="."]
-offset_left = 167.0
-offset_top = 91.0
-offset_right = 1233.0
-offset_bottom = 722.0
+offset_left = 94.0
+offset_top = 36.0
+offset_right = 1306.0
+offset_bottom = 727.0
 size_flags_stretch_ratio = 2.69
+theme_override_styles/panel = SubResource("StyleBoxFlat_lbdgs")
 
 [node name="lines" type="VBoxContainer" parent="scroller"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_ylspt")
+alignment = 1
 
 [node name="score_liner dummy" type="HBoxContainer" parent="scroller/lines"]
 unique_name_in_owner = true
@@ -40,5 +52,13 @@ layout_mode = 2
 alignment = 1
 
 [node name="Label dummy" type="Label" parent="scroller/lines/score_liner dummy"]
+visible = false
 layout_mode = 2
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="scroller/lines/score_liner dummy"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("3_cpqqx")
+expand_mode = 1

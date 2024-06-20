@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://by1sb4t6ml3dq"]
+
+[ext_resource type="Script" path="res://disclaimer.gd" id="1_8ix50"]
+[ext_resource type="Texture2D" uid="uid://b1i8q547own3o" path="res://resources and assets/disclaimer.png" id="2_g7bl2"]
+
+[node name="disclaimer" type="Node2D"]
+script = ExtResource("1_8ix50")
+
+[node name="Disclaimer" type="Sprite2D" parent="."]
+position = Vector2(700, 450)
+texture = ExtResource("2_g7bl2")

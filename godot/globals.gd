@@ -1,24 +1,29 @@
 extends Node
 
+var just_started = true
 var player_selected = 0
 var time = 60
 var distance = 0
 var errors = 0
+var player_name = ''
 #var best_players = ["snail", "slug", "elephant"]
 #var best_times = [32.14,50.20,3]
 #var best_distances = [500,18,22]
 #var best_errors = [0,2,3]
 var times_played = 0
 
-var high_scores = [["snail", 58.42, "0", 0],
-["snail", 31.45, "500", 6],
-["centipede", 60, "386", 17],
-["slug", 23.24, "500", 24],
-["butterfly", 26.07, "500", 26],]
+var high_scores = [
+#["snail", 58.42, 0, 0],
+#["snail", 31.45, 50, 6],
+#["centipede", 60, 38, 17],
+#["slug", 23.24, 50, 24],
+#["butterfly", 26.07, 50, 26],
+#["elephant", 26.07, 50, 26],
+					]
 
 var first_try = true
 
-var players = ["snail","slug","elephant","butterfly","spider","centipede"]
+var players = ["snail","slug","butterfly","spider","elephant","centipede"]
 
 const animals = {
 	"snail": {

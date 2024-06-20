@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjfqopm60r44n"]
+
+[ext_resource type="AudioStream" uid="uid://bncomc722k6lc" path="res://resources and assets/zoolympics_2.ogg" id="1_l4f31"]
+
+[sub_resource type="GDScript" id="GDScript_6xknd"]
+script/source = "extends AudioStreamPlayer
+
+
+func play_music() :
+	$\"/root/AudioPlayer\".play()
+	
+func stop_music() :
+	$\"/root/AudioPlayer\".stop()	
+"
+
+[node name="audio_player" type="AudioStreamPlayer"]
+stream = ExtResource("1_l4f31")
+script = SubResource("GDScript_6xknd")

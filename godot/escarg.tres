@@ -1,7 +1,21 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b3nsicbf6e401"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b3nsicbf6e401"]
 
 [ext_resource type="FontFile" uid="uid://cm3js1652oyf" path="res://resources and assets/fonts/cmu-typewriter/Typewriter/cmuntb.ttf" id="1_ohsru"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vfouk"]
+bg_color = Color(0, 0, 0, 0.67451)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.392157, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [resource]
 default_font = ExtResource("1_ohsru")
 default_font_size = 50
+Button/styles/normal = SubResource("StyleBoxFlat_vfouk")

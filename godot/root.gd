@@ -5,6 +5,10 @@ var cur_animal = globals.animals[cur_animal_id]
 var player_sprite = cur_animal["sprite"]
 
 func _ready():
+	if globals.just_started :
+		globals.just_started = false
+		get_tree().change_scene_to_file("res://disclaimer.tscn")
+	
 	$play_button.pressed.connect(func():play())
 	$player_button.pressed.connect(func():player_select())
 	$scores_button.pressed.connect(func():high_scores())
@@ -27,3 +31,4 @@ func player_select():
 	get_tree().change_scene_to_file("res://player_select.tscn")
 func exit():
 	get_tree().quit()
+	

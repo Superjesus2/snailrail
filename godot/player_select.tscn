@@ -18,9 +18,9 @@ scale = Vector2(3.44792, 3.44792)
 texture = ExtResource("3_h0e5d")
 
 [node name="back_button" type="Button" parent="."]
-offset_left = 624.0
+offset_left = 610.0
 offset_top = 760.0
-offset_right = 788.0
+offset_right = 802.0
 offset_bottom = 843.0
 text = "Select"
 

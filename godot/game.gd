@@ -4,7 +4,7 @@ var elapsed_time = 0
 var the_timer = 0
 var start_timer = 3
 var game_over
-var starting = true
+var has_started = false
 
 var is_slowed = false
 var is_snared = false
@@ -19,7 +19,7 @@ var all_key_names = key_names_1 + key_names_2 + key_names_3
 var button_nodes = []
 var label_nodes = []
 
-const finish_line_pos_x = 2500
+const finish_line_pos_x = 2490
 const max_idle_duration = 1.2
 const vitesse_min = 0
 
@@ -38,6 +38,7 @@ var keys_for_this_animal__labels = cur_animal["keylabels"]
 var vitesse_max = cur_animal["vitesse_max"]
 var can_go_left = cur_animal["can go left"]
 var is_animated = cur_animal["is animated"]
+var animator = 0
 
 # input system
 var going_right = true
@@ -47,7 +48,8 @@ func back():
 	get_tree().change_scene_to_file("res://root.tscn")
 
 func _ready():
-
+	
+	has_started = false
 	globals.errors = 0
 	globals.first_try = false
 	%back_button.pressed.connect(func():back())
@@ -92,56 +94,57 @@ func _ready():
 
 func _process(_delta):
 	
-# L'escargot bouge :
-	$player.position.x += _delta * vitesse
-	player_pos_x += _delta * vitesse
-	# de moins en moins vite
-	if is_slowed == true :
-		vitesse -= (vitesse/80) + 0.004
-	# de zéro
-	if is_snared == true :
-		vitesse -= 1.2
-	# jamais moins de zéro :
-	if vitesse < vitesse_min :
-		vitesse = vitesse_min
-	# jamais trop :
-	if vitesse > vitesse_max :
-		vitesse = vitesse_max
-	# avec style :
-		# ANIMATION
-	if is_animated :
-		pass
-		
-	else :
-		if vitesse < vitesse_max/3 :
-			$player.texture = load(player_sprite[0])
-		if vitesse < vitesse_max/1.5 and vitesse > vitesse_max/3 :
-			$player.texture = load(player_sprite[1])
-		if vitesse > vitesse_max/1.5 :
-			$player.texture = load(player_sprite[2])
-		if is_snared and not vitesse == 0 :
-			$player.texture = load(player_sprite[3])
-		if vitesse == 0 :
-			$player.texture = load(player_sprite[0])
+	if has_started :
+	# L'escargot bouge :
+		$player.position.x += _delta * vitesse
+		player_pos_x += _delta * vitesse
+		# de moins en moins vite
+		if is_slowed == true :
+			vitesse -= (vitesse/80) + 0.004
+		# de zéro
+		if is_snared == true :
+			vitesse -= 1.2
+		# jamais moins de zéro :
+		if vitesse < vitesse_min :
+			vitesse = vitesse_min
+		# jamais trop :
+		if vitesse > vitesse_max :
+			vitesse = vitesse_max
+		# avec style :
+			# ANIMATION
+		if is_animated :
+			pass
 			
-	# jusqu'au bout du monde :
-	if player_pos_x > finish_line_pos_x :
-		itsa_win()
-	# jusqu'à la mort
-	if the_timer < 0 :
-		itsa_loose()
+		else :
+			if vitesse < vitesse_max/3 :
+				$player.texture = load(player_sprite[0])
+			if vitesse < vitesse_max/1.5 and vitesse > vitesse_max/3 :
+				$player.texture = load(player_sprite[1])
+			if vitesse > vitesse_max/1.5 :
+				$player.texture = load(player_sprite[2])
+			if is_snared and not vitesse == 0 :
+				$player.texture = load(player_sprite[3])
+			if vitesse == 0 :
+				$player.texture = load(player_sprite[0])
+				
+		# jusqu'au bout du monde :
+		if player_pos_x > finish_line_pos_x :
+			itsa_win()
+		# jusqu'à la mort
+		if the_timer > 60 :
+			itsa_loose()
 
-	# Le temps passe :
+		# Le temps passe :
+		idle_duration += _delta
+		if idle_duration > max_idle_duration :
+			is_slowed = true
+		elapsed_time += _delta
+		the_timer = elapsed_time
 	if not game_over :
 		%chrono_timer.text = "%.2f" % the_timer + 's'
-		globals.distance = "%.0f" % (player_pos_x/5)
-	idle_duration += _delta
-	if idle_duration > max_idle_duration :
-		is_slowed = true
-	elapsed_time += _delta
-	the_timer = 60 - elapsed_time
+		globals.distance = snapped((player_pos_x/83), 0.1)
 	# L'espace tend :
-	%distance_counter.text = str(globals.distance) + ' m'
+	%distance_counter.text = str(globals.distance) + ' cm'
 	# Le score s'tasse :
 	%error_counter.text = str(globals.errors)
 
@@ -149,7 +152,11 @@ func retry():
 	get_tree().change_scene_to_file("res://game.tscn")
 
 func _on_key_success():
-	vitesse += 1
+	has_started = true
+	if cur_animal_id == 'centipede' :
+		vitesse += 2
+	else :
+		vitesse += 1
 	is_snared = false
 	is_slowed = false
 	idle_duration = 0
@@ -157,27 +164,16 @@ func _on_key_success():
 		animate()
 
 func _on_key_fail():
+	has_started = true
 	is_snared = true
 	idle_duration = 0
 	if is_animated :
 		animate()
 
 func itsa_win():
+	vitesse = 0
 	if not game_over :
 		globals.time = snapped(the_timer, 0.01)
-		%chrono_timer.text = "%.2f" % globals.time + 's'
-		scores()
-		%back_button.visible = true
-		%keyboard_keys.visible = false
-		%keyboard_labels.visible = false
-	game_over = true
-	vitesse = 0
-
-func itsa_loose():
-	if not game_over :
-		if the_timer < 0 :
-			the_timer = 0
-		globals.time = 60 - snapped(the_timer, 0.01)
 		%chrono_timer.text = "%.2f" % globals.time + 's'
 		scores()
 		%back_button.visible = true
@@ -185,18 +181,36 @@ func itsa_loose():
 		%keyboard_keys.visible = false
 		%keyboard_labels.visible = false
 	game_over = true
+
+func itsa_loose():
 	vitesse = 0
+	if not game_over :
+		if the_timer > 60 :
+			the_timer = 60
+		globals.time = snapped(the_timer, 0.01)
+		%chrono_timer.text = "%.2f" % globals.time + 's'
+		scores()
+		%back_button.visible = true
+		%retry_button.visible = true
+		%keyboard_keys.visible = false
+		%keyboard_labels.visible = false
+	game_over = true
 
 func animate():
-	pass
+	animator += 0.5
+	if animator > player_sprite.size() - 0.5 :
+		animator = 0
+	$player.texture = load(player_sprite[animator])
 
 func scores():
 		globals.high_scores.append([globals.players[globals.player_selected],\
 									globals.time,\
 									globals.distance,\
-									globals.errors])
-		print(globals.high_scores)
+									globals.errors,\
+									globals.player_name])
 		globals.times_played += 1
+		
+		Leaderboards.add_data()
 
 func validate_input(expect_key, _event):
 	expect_key.clear()

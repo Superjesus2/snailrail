@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bncomc722k6lc"
+path="res://.godot/imported/zoolympics_2.ogg-72a916ea9d112836714462f8ad319c6a.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources and assets/zoolympics_2.ogg"
+dest_files=["res://.godot/imported/zoolympics_2.ogg-72a916ea9d112836714462f8ad319c6a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
