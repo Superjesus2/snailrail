@@ -1,5 +1,18 @@
 extends Node
 
+#func _ready():
+#
+#	SilentWolf.configure({
+#	"api_key": "Uabbdc8gUK1QkKJ3AkWcg4LQYghpJ8gm3lIc771n",
+#	"game_id": "Zoolympics",
+#	"log_level": 1
+#	})
+#
+#	SilentWolf.configure_scores({
+#	"open_scene_on_close": "res://scenes/MainPage.tscn"
+#	})
+
+
 var just_started = true
 var player_selected = 0
 var time = 60

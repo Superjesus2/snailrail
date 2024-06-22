@@ -11,8 +11,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sdvyq")
 
-[node name="TextEdit" type="TextEdit" parent="."]
+[node name="namer" type="LineEdit" parent="."]
 layout_mode = 0
-offset_right = 101.0
-offset_bottom = 74.0
-placeholder_text = "AAA"
+offset_left = 632.0
+offset_top = 464.0
+offset_right = 776.0
+offset_bottom = 539.0
+placeholder_text = "AAAAA"
+alignment = 1
+max_length = 5
+expand_to_text_length = true
+
+[node name="sub_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 616.0
+offset_top = 576.0
+offset_right = 792.0
+offset_bottom = 651.0
+text = "Submit"
