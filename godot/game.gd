@@ -1,7 +1,5 @@
 extends Node
 
-@onready var namer_scn = preload("res://scores_name.tscn")
-
 var elapsed_time = 0
 var the_timer = 0
 var start_timer = 3
@@ -95,10 +93,6 @@ func _ready():
 		# IL FAUT QUE LES SPAWNERS EXISTENT pour le composant 'TextureButton+LABEL'
 
 func _process(_delta):
-	
-	if $HUD/scores_name.visible == true :
-		%back_button.visible = false
-		%retry_button.visible = false
 	
 	if has_started :
 	# L'escargot bouge :
@@ -195,11 +189,11 @@ func itsa_loose():
 			the_timer = 60
 		globals.time = snapped(the_timer, 0.01)
 		%chrono_timer.text = "%.2f" % globals.time + 's'
-		%keyboard_keys.visible = false
-		%keyboard_labels.visible = false
 		scores()
 		%back_button.visible = true
 		%retry_button.visible = true
+		%keyboard_keys.visible = false
+		%keyboard_labels.visible = false
 	game_over = true
 
 func animate():
@@ -209,15 +203,14 @@ func animate():
 	$player.texture = load(player_sprite[animator])
 
 func scores():
-	var namer = namer_scn.instantiate()
-	$HUD.add_child(namer)
-	globals.high_scores.append([globals.players[globals.player_selected],\
-								globals.time,\
-								globals.distance,\
-								globals.errors,\
-								globals.player_name])
-	globals.times_played += 1
-	Leaderboards.add_data()
+		globals.high_scores.append([globals.players[globals.player_selected],\
+									globals.time,\
+									globals.distance,\
+									globals.errors,\
+									globals.player_name])
+		globals.times_played += 1
+		
+		Leaderboards.add_data()
 
 func validate_input(expect_key, _event):
 	expect_key.clear()

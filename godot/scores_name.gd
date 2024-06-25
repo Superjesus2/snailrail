@@ -9,4 +9,3 @@ func _ready():
 func submit():
 	if $namer.text != '':
 		self.visible = false
-	
