@@ -5,6 +5,7 @@ extends Node2D
 #			get_data()
 
 signal completed
+signal ready_to_send
 var my_data = {}
 var client = HTTPClient.new()
 const url_submit = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScaqMBte_LD9kXVQPi6g6JtzU_Oy-K6v5QwfYxdA_FnsT5kaw/formResponse'

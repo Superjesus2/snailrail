@@ -66,13 +66,15 @@ func scoring():
 		best_distance.modulate = Color.from_hsv(hue_distance,1,1)
 		var hue_time = remap((float(Leaderboards.my_data[index]['time'])), 0, 60, 0.45, 0)
 		best_time.modulate = Color.from_hsv(hue_time,1,1)
+	
+	$scroller.vertical_scroll_mode = 1
 
 
 func _ready():
 	
 	Leaderboards.completed.connect(func():scoring())
-	Leaderboards.get_data()
 	$back_button.pressed.connect(func():back())
+	Leaderboards.get_data()
 	
 #	for each in globals.high_scores :
 #		var index = globals.high_scores.find(each)

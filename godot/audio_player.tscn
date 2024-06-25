@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bjfqopm60r44n"]
 
-[ext_resource type="AudioStream" uid="uid://bncomc722k6lc" path="res://resources and assets/zoolympics_2.ogg" id="1_l4f31"]
+[ext_resource type="AudioStream" uid="uid://cuwamjxdo2ap4" path="res://resources and assets/zoolympics_3.ogg" id="1_lxr0c"]
 
 [sub_resource type="GDScript" id="GDScript_6xknd"]
 script/source = "extends AudioStreamPlayer
@@ -14,5 +14,5 @@ func stop_music() :
 "
 
 [node name="audio_player" type="AudioStreamPlayer"]
-stream = ExtResource("1_l4f31")
+stream = ExtResource("1_lxr0c")
 script = SubResource("GDScript_6xknd")

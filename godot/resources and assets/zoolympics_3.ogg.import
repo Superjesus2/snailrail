@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cuwamjxdo2ap4"
+path="res://.godot/imported/zoolympics_3.ogg-47e26d30d6eb763c1bc01c4db6f2b595.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources and assets/zoolympics_3.ogg"
+dest_files=["res://.godot/imported/zoolympics_3.ogg-47e26d30d6eb763c1bc01c4db6f2b595.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

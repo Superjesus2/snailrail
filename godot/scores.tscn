@@ -32,19 +32,23 @@ offset_bottom = 851.0
 text = "Back"
 
 [node name="scroller" type="ScrollContainer" parent="."]
-offset_left = 94.0
-offset_top = 36.0
-offset_right = 1306.0
-offset_bottom = 727.0
-size_flags_stretch_ratio = 2.69
-theme_override_styles/panel = SubResource("StyleBoxFlat_lbdgs")
-follow_focus = true
-vertical_scroll_mode = 2
-
-[node name="lines" type="VBoxContainer" parent="scroller"]
-layout_mode = 2
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 120.0
+offset_top = 64.0
+offset_right = 1288.0
+offset_bottom = 720.0
+grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_lbdgs")
+
+[node name="lines" type="VBoxContainer" parent="scroller"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 1500)
+layout_mode = 2
+size_flags_horizontal = 3
 theme = SubResource("Theme_ylspt")
 alignment = 1
 
@@ -55,12 +59,10 @@ layout_mode = 2
 alignment = 1
 
 [node name="Label dummy" type="Label" parent="scroller/lines/score_liner dummy"]
-visible = false
 layout_mode = 2
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="scroller/lines/score_liner dummy"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("3_cpqqx")

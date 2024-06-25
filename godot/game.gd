@@ -36,9 +36,11 @@ var player_sprite = cur_animal["sprite"]
 var keys_for_this_animal__keys = cur_animal["keycodes"]
 var keys_for_this_animal__labels = cur_animal["keylabels"]
 var vitesse_max = cur_animal["vitesse_max"]
+var vitesse_animal = cur_animal["vitesse"]
 var can_go_left = cur_animal["can go left"]
 var is_animated = cur_animal["is animated"]
 var animator = 0
+@onready var name_in_scn = preload("res://scores_name.tscn")
 
 # input system
 var going_right = true
@@ -49,6 +51,9 @@ func back():
 
 func _ready():
 	
+	var name_in = name_in_scn.instantiate()
+	$HUD.add_child(name_in)
+	$HUD/scores_name.visible = false
 	has_started = false
 	globals.errors = 0
 	globals.first_try = false
@@ -100,7 +105,7 @@ func _process(_delta):
 		player_pos_x += _delta * vitesse
 		# de moins en moins vite
 		if is_slowed == true :
-			vitesse -= (vitesse/80) + 0.004
+			vitesse -= (vitesse/80) + 0.006
 		# de zéro
 		if is_snared == true :
 			vitesse -= 1.2
@@ -153,10 +158,7 @@ func retry():
 
 func _on_key_success():
 	has_started = true
-	if cur_animal_id == 'centipede' :
-		vitesse += 2
-	else :
-		vitesse += 1
+	vitesse += vitesse_animal
 	is_snared = false
 	is_slowed = false
 	idle_duration = 0
@@ -176,8 +178,6 @@ func itsa_win():
 		globals.time = snapped(the_timer, 0.01)
 		%chrono_timer.text = "%.2f" % globals.time + 's'
 		scores()
-		%back_button.visible = true
-		%retry_button.visible = true
 		%keyboard_keys.visible = false
 		%keyboard_labels.visible = false
 	game_over = true
@@ -190,8 +190,6 @@ func itsa_loose():
 		globals.time = snapped(the_timer, 0.01)
 		%chrono_timer.text = "%.2f" % globals.time + 's'
 		scores()
-		%back_button.visible = true
-		%retry_button.visible = true
 		%keyboard_keys.visible = false
 		%keyboard_labels.visible = false
 	game_over = true
@@ -203,14 +201,18 @@ func animate():
 	$player.texture = load(player_sprite[animator])
 
 func scores():
-		globals.high_scores.append([globals.players[globals.player_selected],\
-									globals.time,\
-									globals.distance,\
-									globals.errors,\
-									globals.player_name])
-		globals.times_played += 1
-		
-		Leaderboards.add_data()
+	
+	$HUD/scores_name.visible = true
+	await Leaderboards.ready_to_send
+	globals.high_scores.append([globals.players[globals.player_selected],\
+								globals.time,\
+								globals.distance,\
+								globals.errors,\
+								globals.player_name])
+	globals.times_played += 1
+	Leaderboards.add_data()
+	%back_button.visible = true
+	%retry_button.visible = true
 
 func validate_input(expect_key, _event):
 	expect_key.clear()
