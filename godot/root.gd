@@ -15,8 +15,8 @@ func _ready():
 	$exit_button.pressed.connect(func():exit())
 	$player.texture = load(player_sprite[0])
 	
-	if globals.first_try :
-		$scores_button.visible = false
+#	if globals.first_try :
+#		$scores_button.visible = false
 
 func high_scores():
 	get_tree().change_scene_to_file("res://scores.tscn")

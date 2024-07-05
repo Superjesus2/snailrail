@@ -4,8 +4,11 @@ extends Node2D
 #		if event.is_pressed() and not event.is_echo():
 #			get_data()
 
+var submitting
 signal completed
 signal ready_to_send
+signal dont_send
+signal data_sent
 var my_data = {}
 var client = HTTPClient.new()
 const url_submit = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScaqMBte_LD9kXVQPi6g6JtzU_Oy-K6v5QwfYxdA_FnsT5kaw/formResponse'
@@ -29,7 +32,6 @@ func _on_fetched(result, _response_code, _headers, body):
 			"\nThe input string was:\n" + json_raw)
 		return
 	my_data = json.data
-	print(my_data)
 	completed.emit()
 
 func get_data() :
@@ -55,3 +57,4 @@ func add_data() :
 	var err = http.request(url_submit,headers,HTTPClient.METHOD_POST,user_data)
 	if err :
 		http.queue_free()
+	data_sent.emit()

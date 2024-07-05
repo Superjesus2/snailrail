@@ -3,8 +3,6 @@ extends Node2D
 
 func scoring():
 
-#	print(Leaderboards.my_data)
-
 	for each in Leaderboards.my_data :
 		var index = Leaderboards.my_data.find(each)
 		var score_liner = HBoxContainer.new()
@@ -51,7 +49,7 @@ func scoring():
 			best_player.custom_minimum_size = Vector2(240,192)
 			best_player.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		best_player.texture = load(globals.animals[player_sprite]['sprite'][0])
-		best_name.text = Leaderboards.my_data[index]['name']
+		best_name.text = str(Leaderboards.my_data[index]['name'])
 		best_time.text = str(Leaderboards.my_data[index]['time']) + 's'
 		best_distance.text = str(Leaderboards.my_data[index]['distance']) + 'cm'
 		best_error.text = str(Leaderboards.my_data[index]['errors'])
@@ -68,7 +66,7 @@ func scoring():
 		best_time.modulate = Color.from_hsv(hue_time,1,1)
 	
 	$scroller.vertical_scroll_mode = 1
-
+	$load_label.visible = false
 
 func _ready():
 	

@@ -8,7 +8,7 @@ script/source = "extends AudioStreamPlayer
 
 func play_music() :
 	$\"/root/AudioPlayer\".play()
-	
+
 func stop_music() :
 	$\"/root/AudioPlayer\".stop()	
 "

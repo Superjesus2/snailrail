@@ -1,7 +1,7 @@
 extends Node
 
 var elapsed_time = 0
-var the_timer = 0
+var the_timer : float = 0
 var start_timer = 3
 var game_over
 var has_started = false
@@ -136,7 +136,7 @@ func _process(_delta):
 		if player_pos_x > finish_line_pos_x :
 			itsa_win()
 		# jusqu'à la mort
-		if the_timer > 60 :
+		if the_timer > 60. :
 			itsa_loose()
 
 		# Le temps passe :
@@ -147,7 +147,7 @@ func _process(_delta):
 		the_timer = elapsed_time
 	if not game_over :
 		%chrono_timer.text = "%.2f" % the_timer + 's'
-		globals.distance = snapped((player_pos_x/83), 0.1)
+		globals.distance = str(float(snapped((player_pos_x/83), 0.1)))
 	# L'espace tend :
 	%distance_counter.text = str(globals.distance) + ' cm'
 	# Le score s'tasse :
@@ -175,23 +175,23 @@ func _on_key_fail():
 func itsa_win():
 	vitesse = 0
 	if not game_over :
-		globals.time = snapped(the_timer, 0.01)
+		globals.time = float(snapped(the_timer, 0.01))
 		%chrono_timer.text = "%.2f" % globals.time + 's'
-		scores()
 		%keyboard_keys.visible = false
 		%keyboard_labels.visible = false
+		scores()
 	game_over = true
 
 func itsa_loose():
 	vitesse = 0
 	if not game_over :
-		if the_timer > 60 :
-			the_timer = 60
-		globals.time = snapped(the_timer, 0.01)
+		if the_timer > 60. :
+			the_timer = 60.
+		globals.time = float(snapped(the_timer, 0.01))
 		%chrono_timer.text = "%.2f" % globals.time + 's'
-		scores()
 		%keyboard_keys.visible = false
 		%keyboard_labels.visible = false
+		scores()
 	game_over = true
 
 func animate():
@@ -201,18 +201,28 @@ func animate():
 	$player.texture = load(player_sprite[animator])
 
 func scores():
-	
 	$HUD/scores_name.visible = true
-	await Leaderboards.ready_to_send
+	Signal(Leaderboards.ready_to_send).connect(func():send_score())
+	Signal(Leaderboards.dont_send).connect(func():dont_send_score())
+	Signal(Leaderboards.data_sent).connect(func():data_sent())
+func send_score():
 	globals.high_scores.append([globals.players[globals.player_selected],\
 								globals.time,\
 								globals.distance,\
 								globals.errors,\
 								globals.player_name])
+	print('error 3')
+	print(globals.high_scores)
 	globals.times_played += 1
 	Leaderboards.add_data()
+func data_sent():
 	%back_button.visible = true
 	%retry_button.visible = true
+func dont_send_score():
+	%back_button.visible = true
+	%retry_button.visible = true
+
+
 
 func validate_input(expect_key, _event):
 	expect_key.clear()

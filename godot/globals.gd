@@ -2,8 +2,8 @@ extends Node
 
 var just_started = true
 var player_selected = 0
-var time : float = 60
-var distance : float = 0
+var time = 60
+var distance = 0
 var errors = 0
 var player_name = ''
 #var best_players = ["snail", "slug", "elephant"]

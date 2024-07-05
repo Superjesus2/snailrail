@@ -29,3 +29,11 @@ offset_top = 728.0
 offset_right = 792.0
 offset_bottom = 803.0
 text = "Submit"
+
+[node name="nosub_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 536.0
+offset_top = 808.0
+offset_right = 872.0
+offset_bottom = 883.0
+text = "Don't submit"
